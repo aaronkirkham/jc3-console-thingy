@@ -93,8 +93,6 @@ HRESULT          D3D11CreateDevice(IDXGIAdapter *pAdapter, D3D_DRIVER_TYPE Drive
                                                                    pFeatureLevel, ppImmediateContext);
 }
 
-void HookZwSetInformationThread();
-
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     // exit if not jc3
@@ -105,7 +103,6 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
     if (fdwReason == DLL_PROCESS_ATTACH) {
         // allocate a section for hooking things
         VirtualAlloc((LPVOID)0x0000000160000000, 0x6000000, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        HookZwSetInformationThread();
 
         char buffer[MAX_PATH] = {0};
         GetSystemDirectoryA(buffer, MAX_PATH);

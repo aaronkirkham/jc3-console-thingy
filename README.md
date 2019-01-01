@@ -1,13 +1,13 @@
 ## Just Cause 3 Console Thingy
-A Just Cause 3 port of my [console thingy for Just Cause 4](https://github.com/aaronkirkham/jc4-console-thingy)
+A Just Cause 3 port of my [console thingy for Just Cause 4](https://github.com/aaronkirkham/jc4-console-thingy). Spawn anything and everything, vehicles, characters, animals, props.
 
-<p align="center"><img src="https://i.imgur.com/pDelm9v.png" alt=""></p>
+<p align="center"><img src="https://i.imgur.com/gUAmqcR.png" alt=""></p>
 
 ### How to Install
  - Download the latest version from [releases](https://github.com/aaronkirkham/jc3-console-thingy/releases)
- - Extract `xinput9_1_0.dll` to your Just Cause 4 installation folder
+ - Extract `xinput9_1_0.dll` to your Just Cause 3 installation folder
  - Start the game and press the tilde (\`~) or F1 key to open the console
- - ***OPTIONAL*** - Enable super fast game loading with the `-quickstart` launch argument via Steam
+ - ***OPTIONAL*** - Enable faster game loading with the `-quickstart` launch argument via Steam
 
 ### Commands
  - `spawn` - Spawn everything! Vehicles, characters, animals & props.
