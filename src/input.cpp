@@ -26,19 +26,10 @@ void Input::EnableInput(bool toggle)
     m_selectedHint   = -1;
     m_hintPage       = 0;
 
-#if 0
-    // toggle hud which might get in the way (bottomleft)
-    auto &ui_manager      = jc::CUIManager::instance();
-    auto  hud_vehicle     = ui_manager.GetUI(0x8AC05ABA);
-    auto  hud_bottom_left = ui_manager.GetUI(0x5F62FEDF);
+    // toggle hud
+    jc::CUIManager().instance().m_active = !toggle;
 
-    if (hud_vehicle && hud_bottom_left) {
-        hud_vehicle->m_state     = toggle ? 1 : 2;
-        hud_bottom_left->m_state = toggle ? 1 : 2;
-    }
-#endif
-
-	// freeze input
+    // freeze input
     *(bool *)((char *)input_thingy + 0x70) = !toggle;
 }
 

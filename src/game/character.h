@@ -8,7 +8,7 @@ namespace jc
 class CCharacter
 {
   public:
-    char      _pad[0x2828];
+    char      _pad[0x2830];
     CMatrix4f m_transform;
 };
 }; // namespace jc

@@ -52,10 +52,6 @@ class SpawnCommand : public ICommand
         auto  transform    = local_player->m_character->m_transform;
         auto &aimpos       = local_player->m_aimControl->m_aimPos;
 
-		transform.m[1].x = 0.0f;
-        transform.m[1].y = 1.0f;
-        transform.m[1].z = 0.0f;
-
         transform.m[3].x = aimpos.x;
         transform.m[3].y = aimpos.y + 1.0f;
         transform.m[3].z = aimpos.z;
