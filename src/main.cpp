@@ -75,6 +75,20 @@ HRESULT          D3D11CreateDevice(IDXGIAdapter *pAdapter, D3D_DRIVER_TYPE Drive
         HWND hwnd    = *(HWND *)0x142E22A18;
         WndProc_orig = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
 
+        // focus lost
+        static hk::inject_call<void, HWND, bool> lose_focus(0x143218620);
+        lose_focus.inject([](HWND hwnd, bool a2) {
+            lose_focus.call(hwnd, a2);
+            Input::Get()->FocusChanged(true);
+        });
+
+        // focus gained
+        static hk::inject_call<void, HWND> gain_focus(0x143218611);
+        gain_focus.inject([](HWND hwnd) {
+            gain_focus.call();
+            Input::Get()->FocusChanged(false);
+        });
+
         static hk::inject_call<int64_t, jc::HDevice_t *> flip(0x1432E0071);
         flip.inject([](jc::HDevice_t *device) {
             Graphics::Get()->BeginDraw(device);

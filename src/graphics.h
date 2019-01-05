@@ -29,9 +29,9 @@ class Graphics : public Singleton<Graphics>
         m_ready = false;
         m_state.releaseSavedState();
 
-		if (m_context) {
+        if (m_context) {
             m_context->Release();
-		}
+        }
 
         if (m_font) {
             m_font->Release();

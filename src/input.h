@@ -17,8 +17,8 @@ class Input : public Singleton<Input>
     using command_t = std::function<void(const std::string& arguments)>;
 
   private:
-    bool                     m_drawInput = false;
-    std::vector<std::string> m_history;
+    bool                     m_drawInput      = false;
+    std::vector<std::string> m_history        = {""};
     int32_t                  m_currentHistory = 0;
     ICommand*                m_cmd            = nullptr;
     std::string              m_cmdText        = "";
@@ -26,6 +26,7 @@ class Input : public Singleton<Input>
     std::vector<std::string> m_hints;
     int32_t                  m_selectedHint = -1;
     int32_t                  m_hintPage     = 0;
+    bool                     m_hasFocus     = true;
 
     std::unordered_map<std::string, std::unique_ptr<ICommand>> m_commands;
     std::unordered_map<std::string, command_t>                 m_fnCommands;
@@ -36,6 +37,8 @@ class Input : public Singleton<Input>
   public:
     Input()          = default;
     virtual ~Input() = default;
+
+    void FocusChanged(bool lost_focus);
 
     void RegisterCommand(std::unique_ptr<ICommand> cmd)
     {

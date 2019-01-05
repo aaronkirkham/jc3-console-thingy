@@ -22,7 +22,7 @@ class SpawnCommand : public ICommand
 #pragma pack(pop)
 
   public:
-    inline static std::vector<std::string> m_Hints = {};
+    inline static std::set<std::string> m_Hints = {};
 
     virtual const char *GetCommand() override
     {
@@ -39,7 +39,7 @@ class SpawnCommand : public ICommand
             add_event_hook.call(file, &model, 0xF71C2A21);
 
             if (model.entry) {
-                m_Hints.emplace_back((char *)(model.base + model.entry->data));
+                m_Hints.insert((char *)(model.base + model.entry->data));
             }
 
             return add_event_hook.call(file, buf, hash);

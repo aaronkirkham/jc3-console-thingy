@@ -8,12 +8,10 @@ namespace jc
 class CNetworkPlayer
 {
   public:
-    char _pad[0x128];
-    std::shared_ptr<CPlayer> m_player;
+    char                        _pad[0x128];
+    std::shared_ptr<CPlayer>    m_player;
     std::shared_ptr<CCharacter> m_character;
 };
-
-static_assert(offsetof(CNetworkPlayer, m_character) == 0x138, "borked");
 
 class CNetworkPlayerManager
 {

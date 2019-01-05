@@ -9,18 +9,24 @@
 
 #include "game/debug_renderer.h"
 #include "game/graphics_engine.h"
+#include "game/input_manager.h"
 #include "game/ui_manager.h"
 
 static const int32_t _numHintsPerPage = 10;
 
+void Input::FocusChanged(bool lost_focus)
+{
+    m_hasFocus = !lost_focus;
+
+    // if we are drawing input and regained focus, lock the input once again
+    // as the game will unlock it automatically
+    if (m_drawInput && !lost_focus) {
+        jc::Input::CInputDeviceManager::instance().m_hasFocus = false;
+    }
+}
+
 void Input::EnableInput(bool toggle)
 {
-    static void *input_thingy = nullptr;
-    if (!input_thingy) {
-        input_thingy = *(void **)0x142E2B6F8;
-        m_history.push_back("");
-    }
-
     m_drawInput      = toggle;
     m_currentHistory = 0;
     m_selectedHint   = -1;
@@ -30,7 +36,7 @@ void Input::EnableInput(bool toggle)
     jc::CUIManager().instance().m_active = !toggle;
 
     // freeze input
-    *(bool *)((char *)input_thingy + 0x70) = !toggle;
+    jc::Input::CInputDeviceManager::instance().m_hasFocus = !toggle;
 }
 
 void Input::Draw()
@@ -74,7 +80,23 @@ void Input::Draw()
 
 bool Input::WndProc(uint32_t message, WPARAM wParam, LPARAM lParam)
 {
+    if (!m_hasFocus) {
+        return false;
+    }
+
     switch (message) {
+        // fix ESC key still getting passed to the game when closing the input window
+        // this is because EnableInput will give focus back to the input manager and
+        // if we leave it on KEYDOWN the game will then see the ESC key as down
+        case WM_KEYUP: {
+            if (wParam == VK_ESCAPE && m_selectedHint == -1 && m_history[0].size() == 0) {
+                EnableInput(false);
+                return true;
+            }
+
+            break;
+        }
+
         case WM_KEYDOWN: {
             // tilde key down and the previous key state was up
             const auto vsc = MapVirtualKeyEx(static_cast<int32_t>(wParam), MAPVK_VK_TO_VSC, GetKeyboardLayout(0));
@@ -107,8 +129,6 @@ bool Input::WndProc(uint32_t message, WPARAM wParam, LPARAM lParam)
                                 m_cmdArguments   = "";
                                 m_currentHistory = 0;
                                 m_hints.clear();
-                            } else {
-                                EnableInput(false);
                             }
                         } else {
                             m_selectedHint = -1;

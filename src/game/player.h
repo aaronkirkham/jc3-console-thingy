@@ -15,7 +15,8 @@ class CPlayerAimControl
 class CPlayer
 {
   public:
-    // NOTE(aaron): -16 bytes because we don't cast from CAvatar in CNetworkPlayer
+    // NOTE(aaron): everything here is out of alignment by 16 bytes because we
+    // don't use CAvatar in CNetworkPlayer
     char               _pad[0x100];
     CCharacter*        m_character;
     char               _pad2[0x40];

@@ -5,7 +5,7 @@
 class EventCommand : public ICommand
 {
   public:
-    std::array<const char*, 13> m_Hints = {
+    std::array<const char*, 19> m_Hints = {
         "__showfps",
         "__reload_world",
         "ply.invulnerable",
@@ -16,6 +16,12 @@ class EventCommand : public ICommand
         "ply.pause",
         "ply.unpause",
         "ply.vehicle.burn",
+        "ply.jesus.enable",
+        "ply.jesus.disable",
+        "ply.bavarium.upgrade.enable",
+        "ply.bavarium.upgrade.disable",
+        "ply.lacrima.forcefield.enable",
+        "ply.lacrima.forcefield.disable",
         "debug.vehicle.incrementtint",
         "vocals.rico.enable",
         "vocals.rico.disable",

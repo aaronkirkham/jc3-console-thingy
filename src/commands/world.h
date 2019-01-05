@@ -8,8 +8,6 @@ class WorldCommand : public ICommand
     std::array<const char*, 2> m_Hints = {
         "time",
         "timescale",
-        //"gravity",
-        //"resetgravity",
     };
 
     virtual const char* GetCommand() override
@@ -19,8 +17,7 @@ class WorldCommand : public ICommand
 
     virtual bool Handler(const std::string& arguments) override
     {
-        //static auto World     = *(void**)0x142A8D430;
-        static auto WorldTime = *(void**)0x142F17250; // 1
+        static auto WorldTime = *(void**)0x142F17250;
 
         // time
         if (arguments.find("time ") != std::string::npos) {
@@ -39,21 +36,6 @@ class WorldCommand : public ICommand
                 return true;
             }
         }
-#if 0
-        // gravity
-        else if (arguments.find("gravity ") != std::string::npos) {
-            float gravity = -9.810f;
-            if (sscanf_s(arguments.c_str(), "gravity %f", &gravity) == 1) {
-                *(float*)((char*)World + 0x974) = std::clamp(gravity, -5000.0f, 5000.0f);
-                return true;
-            }
-        }
-        // reset gravity
-        else if (arguments.find("resetgravity") != std::string::npos) {
-            *(float*)((char*)World + 0x974) = -9.810f;
-            return true;
-        }
-#endif
 
         return false;
     }
