@@ -29,7 +29,7 @@ class CSpawnSystem
 
         auto request = new SpawnReq{callback, userdata};
         hk::func_call<void>(
-            0x1447C1140, this, model_name.c_str(), transform, 0x2013C,
+            0x140E97DA0, this, model_name.c_str(), transform, 0x2013C,
             (success_t)[](const spawned_objects& objects, void* userdata) {
                 auto spawn_req = (SpawnReq*)userdata;
                 spawn_req->callback(objects, spawn_req->userdata);

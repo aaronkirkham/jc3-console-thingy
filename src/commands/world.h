@@ -17,14 +17,14 @@ class WorldCommand : public ICommand
 
     virtual bool Handler(const std::string& arguments) override
     {
-        static auto WorldTime = *(void**)0x142F17250;
+        static auto WorldTime = *(void**)0x142F17250; //CDayCycle
 
         // time
         if (arguments.find("time ") != std::string::npos) {
             float time = 0.0f;
             if (sscanf_s(arguments.c_str(), "time %f", &time) == 1) {
                 time = std::clamp(time, -24.0f, 24.0f);
-                hk::func_call<void>(0x1437E37B0, WorldTime, time);
+                hk::func_call<void>(0x14052CD20, WorldTime, time);
                 return true;
             }
         }

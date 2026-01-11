@@ -32,7 +32,7 @@ class SpawnCommand : public ICommand
     virtual void Initialize() override
     {
         static hk::inject_call<PropertyFileResult *, void *, PropertyFileResult *, uint32_t> add_event_hook(
-            0x1447EC034);
+            0x140EBFBD7);
         add_event_hook.inject([](void *file, PropertyFileResult *buf, uint32_t hash) {
             PropertyFileResult model;
 

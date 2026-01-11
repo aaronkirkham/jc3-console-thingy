@@ -66,30 +66,30 @@ HRESULT          D3D11CreateDevice(IDXGIAdapter *pAdapter, D3D_DRIVER_TYPE Drive
             hk::put<bool>(0x142F3407A, true);
 
             // IsIntroSequenceComplete always returns true
-            hk::put<uint32_t>(0x144883EE0, 0x90C301B0);
+            hk::put<uint32_t>(0x140F46280, 0x90C301B0);
 
             // IsIntroMovieComplete always returns true
-            hk::put<uint32_t>(0x144883F60, 0x90C301B0);
+            hk::put<uint32_t>(0x140F46300, 0x90C301B0);
         }
 
         HWND hwnd    = *(HWND *)0x142E22A18;
         WndProc_orig = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
 
         // focus lost
-        static hk::inject_call<void, HWND, bool> lose_focus(0x143218620);
+        static hk::inject_call<void, HWND, bool> lose_focus(0x14000B291);
         lose_focus.inject([](HWND hwnd, bool a2) {
             lose_focus.call(hwnd, a2);
             Input::Get()->FocusChanged(true);
         });
 
         // focus gained
-        static hk::inject_call<void, HWND> gain_focus(0x143218611);
+        static hk::inject_call<void, HWND> gain_focus(0x14000B284);
         gain_focus.inject([](HWND hwnd) {
             gain_focus.call();
             Input::Get()->FocusChanged(false);
         });
 
-        static hk::inject_call<int64_t, jc::HDevice_t *> flip(0x1432E0071);
+        static hk::inject_call<int64_t, jc::HDevice_t *> flip(0x1400B8A22);
         flip.inject([](jc::HDevice_t *device) {
             Graphics::Get()->BeginDraw(device);
 
